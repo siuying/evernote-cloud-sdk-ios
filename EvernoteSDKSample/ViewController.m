@@ -199,7 +199,7 @@ NS_ENUM(NSInteger, SampleFunctions) {
             [self finishClip];
             return;
         }
-        [[ENSession sharedSession] uploadNote:note notebook:nil completion:^(ENNoteRef *noteRef, NSError *uploadNoteError) {
+        [[ENSession sharedSession] uploadNote:note notebook:nil completion:^(ENNote* newNote, ENNoteRef *noteRef, NSError *uploadNoteError) {
             NSString * message = nil;
             if (noteRef) {
                 message = @"Web note created.";
@@ -256,7 +256,7 @@ NS_ENUM(NSInteger, SampleFunctions) {
     note.title = @"Photo note";
     [note addResource:resource];
     [SVProgressHUD showWithMaskType:SVProgressHUDMaskTypeClear];
-    [[ENSession sharedSession] uploadNote:note notebook:nil completion:^(ENNoteRef *noteRef, NSError *uploadNoteError) {
+    [[ENSession sharedSession] uploadNote:note notebook:nil completion:^(ENNote* newNote, ENNoteRef *noteRef, NSError *uploadNoteError) {
         NSString * message = nil;
         if (noteRef) {
             message = @"Photo note created.";

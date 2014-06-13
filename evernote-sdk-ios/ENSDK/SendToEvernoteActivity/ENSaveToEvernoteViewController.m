@@ -190,7 +190,7 @@ CGFloat kTextLeftPadding = 20;
     }
     
     // Upload the note.
-    [[ENSession sharedSession] uploadNote:note notebook:self.currentNotebook completion:^(ENNote* note, ENNoteRef *noteRef, NSError *uploadNoteError) {
+    [[ENSession sharedSession] uploadNote:note notebook:self.currentNotebook completion:^(ENNote* newNote, ENNoteRef *noteRef, NSError *uploadNoteError) {
         [self.delegate viewController:self didFinishWithSuccess:(noteRef != nil) uploadError:uploadNoteError];
     }];
 }
