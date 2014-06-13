@@ -840,6 +840,7 @@ static NSString * DeveloperToken, * NoteStoreUrl;
     
     [context.noteStore updateNote:context.note success:^(EDAMNote * resultNote) {
         context.noteRef = context.refToReplace; // The result by definition has the same ref.
+        context.note.updateSequenceNum = resultNote.updateSequenceNum;
         [self uploadNote_completeWithContext:context error:nil];
     } failure:^(NSError *error) {
         if ([error.userInfo[@"parameter"] isEqualToString:@"Note.guid"]) {
@@ -934,6 +935,7 @@ static NSString * DeveloperToken, * NoteStoreUrl;
     }
     [context.noteStore createNote:context.note success:^(EDAMNote * resultNote) {
         context.noteRef.guid = resultNote.guid;
+        context.note.updateSequenceNum = resultNote.updateSequenceNum;
         [self uploadNote_completeWithContext:context error:nil];
     } failure:^(NSError * error) {
         context.noteRef = nil;
