@@ -39,7 +39,7 @@ extern NSString * const ENSessionDidUnauthenticateNotification;
 typedef void (^ENSessionAuthenticateCompletionHandler)(NSError * authenticateError);
 typedef void (^ENSessionListNotebooksCompletionHandler)(NSArray * notebooks, NSError * listNotebooksError);
 typedef void (^ENSessionProgressHandler)(CGFloat progress);
-typedef void (^ENSessionUploadNoteCompletionHandler)(ENNoteRef * noteRef, NSError * uploadNoteError);
+typedef void (^ENSessionUploadNoteCompletionHandler)(ENNote* note, ENNoteRef * noteRef, NSError * uploadNoteError);
 typedef void (^ENSessionShareNoteCompletionHandler)(NSString * url, NSError * shareNoteError);
 typedef void (^ENSessionDeleteNoteCompletionHandler)(NSError * deleteNoteError);
 typedef void (^ENSessionFindNotesCompletionHandler)(NSArray * findNotesResults, NSError * findNotesError);

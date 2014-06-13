@@ -725,14 +725,14 @@ static NSString * DeveloperToken, * NoteStoreUrl;
     
     if (!note) {
         ENSDKLogError(@"must specify note");
-        completion(nil, [NSError errorWithDomain:ENErrorDomain code:ENErrorCodeInvalidData userInfo:nil]);
+        completion(nil, nil, [NSError errorWithDomain:ENErrorDomain code:ENErrorCodeInvalidData userInfo:nil]);
         return;
     }
     
     if ((policy == ENSessionUploadPolicyReplace && !noteToReplace) ||
         (policy == ENSessionUploadPolicyReplaceOrCreate && !noteToReplace)) {
         ENSDKLogError(@"must specify existing ID when requesting a replacement policy");
-        completion(nil, [NSError errorWithDomain:ENErrorDomain code:ENErrorCodeInvalidData userInfo:nil]);
+        completion(nil, nil, [NSError errorWithDomain:ENErrorDomain code:ENErrorCodeInvalidData userInfo:nil]);
         return;
     }
     
@@ -747,7 +747,7 @@ static NSString * DeveloperToken, * NoteStoreUrl;
     }
     
     if (!self.isAuthenticated) {
-        completion(nil, [NSError errorWithDomain:ENErrorDomain code:ENErrorCodeAuthExpired userInfo:nil]);
+        completion(nil, nil, [NSError errorWithDomain:ENErrorDomain code:ENErrorCodeAuthExpired userInfo:nil]);
         return;
     }
     
@@ -755,7 +755,7 @@ static NSString * DeveloperToken, * NoteStoreUrl;
     // the sizes are a function of the user's service level, which can change.
     if (![note validateForLimits]) {
         ENSDKLogError(@"Note failed limits validation. Cannot upload. %@", self);
-        completion(nil, [NSError errorWithDomain:ENErrorDomain code:ENErrorCodeLimitReached userInfo:nil]);
+        completion(nil, nil, [NSError errorWithDomain:ENErrorDomain code:ENErrorCodeLimitReached userInfo:nil]);
     }
     
     ENSessionUploadNoteContext * context = [[ENSessionUploadNoteContext alloc] init];
@@ -947,7 +947,11 @@ static NSString * DeveloperToken, * NoteStoreUrl;
 {
     context.noteStore.uploadProgressHandler = nil;
     if (context.completion) {
-        context.completion(error ? nil : context.noteRef, error);
+        if (error) {
+            context.completion(nil, nil, error);
+        } else {
+            context.completion([[ENNote alloc] initWithServiceNote:context.note], context.noteRef, error);
+        }
     }
 }
 
