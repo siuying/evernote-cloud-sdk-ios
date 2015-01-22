@@ -354,4 +354,8 @@ extern NSString *const kENSSKeychainWhereKey;
 + (void)setAccessibilityType:(CFTypeRef)accessibilityType;
 #endif
 
++ (void) setKeychainGroup:(NSString*)keychainGroup;
+
++ (NSString*) keychainGroup;
+
 @end

@@ -26,7 +26,6 @@
 		860DF43918FCD022002B4793 /* ENResource.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2E23F318EBA5D500BD7E6E /* ENResource.m */; };
 		860DF43B18FCD022002B4793 /* ENNoteRef.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2E23F118EBA5D500BD7E6E /* ENNoteRef.m */; };
 		860DF43D18FCD022002B4793 /* ENError.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2E23EB18EBA5D500BD7E6E /* ENError.m */; };
-		860DF44118FCD022002B4793 /* ENNoteStoreClient.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2E23CD18EBA5D400BD7E6E /* ENNoteStoreClient.m */; };
 		860DF44318FCD022002B4793 /* ENUserStoreClient.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2E23D018EBA5D400BD7E6E /* ENUserStoreClient.m */; };
 		860DF44618FCD022002B4793 /* EDAMErrors.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2E23C118EBA5D400BD7E6E /* EDAMErrors.m */; };
 		860DF44818FCD022002B4793 /* EDAMLimits.m in Sources */ = {isa = PBXBuildFile; fileRef = BE2E23C318EBA5D400BD7E6E /* EDAMLimits.m */; };
@@ -1453,7 +1452,6 @@
 				BE48C70019102DD900025618 /* ENWebClipNoteBuilder.m in Sources */,
 				860DF43B18FCD022002B4793 /* ENNoteRef.m in Sources */,
 				860DF43D18FCD022002B4793 /* ENError.m in Sources */,
-				860DF44118FCD022002B4793 /* ENNoteStoreClient.m in Sources */,
 				860DF44318FCD022002B4793 /* ENUserStoreClient.m in Sources */,
 				BE48C7121912FC1300025618 /* ENLoadingViewController.m in Sources */,
 				860DF44618FCD022002B4793 /* EDAMErrors.m in Sources */,

@@ -18,6 +18,9 @@ NSString *const kENSSKeychainLabelKey = @"labl";
 NSString *const kENSSKeychainLastModifiedKey = @"mdat";
 NSString *const kENSSKeychainWhereKey = @"svce";
 
+static NSString* _keychainGroup;
+static NSString* _accessGroup;
+
 #if __IPHONE_4_0 && TARGET_OS_IPHONE  
 CFTypeRef ENSSKeychainAccessibilityType = NULL;
 #endif
@@ -229,6 +232,44 @@ CFTypeRef ENSSKeychainAccessibilityType = NULL;
 }
 #endif
 
+#pragma mark - Share Keychain Group
+
++ (void) setKeychainGroup:(NSString*)keychainGroup
+{
+    _keychainGroup = keychainGroup;
+    _accessGroup = [[[self bundleSeedID] stringByAppendingString:@"."] stringByAppendingString:[self bundleSeedID]];
+}
+
++ (NSString*) keychainGroup
+{
+    return _keychainGroup;
+}
+
++ (NSString*) accessGroup
+{
+    return _accessGroup;
+}
+
+// programatically find bundleSeedId
++ (NSString *)bundleSeedID {
+    NSDictionary *query = [NSDictionary dictionaryWithObjectsAndKeys:
+                           (__bridge NSString *)kSecClassGenericPassword, (__bridge NSString *)kSecClass,
+                           @"bundleSeedID", kSecAttrAccount,
+                           @"", kSecAttrService,
+                           (id)kCFBooleanTrue, kSecReturnAttributes,
+                           nil];
+    CFDictionaryRef result = nil;
+    OSStatus status = SecItemCopyMatching((__bridge CFDictionaryRef)query, (CFTypeRef *)&result);
+    if (status == errSecItemNotFound)
+        status = SecItemAdd((__bridge CFDictionaryRef)query, (CFTypeRef *)&result);
+    if (status != errSecSuccess)
+        return nil;
+    NSString *accessGroup = [(__bridge NSDictionary *)result objectForKey:(__bridge NSString *)kSecAttrAccessGroup];
+    NSArray *components = [accessGroup componentsSeparatedByString:@"."];
+    NSString *bundleSeedID = [[components objectEnumerator] nextObject];
+    CFRelease(result);
+    return bundleSeedID;
+}
 
 #pragma mark - Private
 
@@ -255,7 +296,17 @@ CFTypeRef ENSSKeychainAccessibilityType = NULL;
 		[dictionary setObject:account forKey:(id)kSecAttrAccount];
 #endif
 	}
-	
+    
+#if TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR
+    if ([self accessGroup]) {
+#if __has_feature(objc_arc)
+        [dictionary setObject:[self accessGroup] forKey:(__bridge id)kSecAttrAccessGroup];
+#else
+        [dictionary setObject:[self accessGroup] forKey:(id)kSecAttrAccessGroup];
+#endif
+    }
+#endif
+
     return dictionary;
 }
 
