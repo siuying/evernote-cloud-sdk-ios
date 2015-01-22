@@ -51,4 +51,7 @@
 
 // Load the credential store from user defaults.
 + (ENCredentialStore *)loadCredentialsFromAppDefaults;
+
++ (void) setKeychainGroup:(NSString*)keychainGroup;
+
 @end

@@ -28,6 +28,7 @@
 
 #import "ENCredentialStore.h"
 #import "ENSDKPrivate.h"
+#import "ENSSKeychain.h"
 
 #define DEFAULTS_CREDENTIAL_STORE_KEY @"EvernoteCredentials"
 
@@ -85,6 +86,11 @@
         [credentials deleteFromKeychain];
     }
     [self.store removeAllObjects];
+}
+
++ (void) setKeychainGroup:(NSString*)keychainGroup
+{
+    [ENSSKeychain setKeychainGroup:keychainGroup];
 }
 
 #pragma mark - NSCoding

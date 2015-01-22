@@ -122,6 +122,9 @@
  *  @return A client for the note store that contains the notebook.
  */
 - (ENNoteStoreClient *)noteStoreForNotebook:(ENNotebook *)notebook;
+
++ (void) setKeychainGroup:(NSString*)keychainGroup;
+
 @end
 
 @interface ENSessionFindNotesResult (Advanced)

@@ -22,6 +22,8 @@ NSString *const kENSSKeychainWhereKey = @"svce";
 CFTypeRef ENSSKeychainAccessibilityType = NULL;
 #endif
 
+static NSString* _keychainGroup;
+
 @interface ENSSKeychain ()
 + (NSMutableDictionary *)_queryForService:(NSString *)service account:(NSString *)account;
 @end
@@ -229,6 +231,15 @@ CFTypeRef ENSSKeychainAccessibilityType = NULL;
 }
 #endif
 
++ (void) setKeychainGroup:(NSString*)keychainGroup
+{
+    _keychainGroup = keychainGroup;
+}
+
++ (NSString*) keychainGroup
+{
+    return _keychainGroup;
+}
 
 #pragma mark - Private
 
@@ -255,6 +266,16 @@ CFTypeRef ENSSKeychainAccessibilityType = NULL;
 		[dictionary setObject:account forKey:(id)kSecAttrAccount];
 #endif
 	}
+    
+#if TARGET_OS_IPHONE && !TARGET_IPHONE_SIMULATOR
+    if ([ENSSKeychain keychainGroup]) {
+#if __has_feature(objc_arc)
+        [dictionary setObject:[ENSSKeychain keychainGroup] forKey:(__bridge id)kSecAttrAccessGroup];
+#else
+        [dictionary setObject:[ENSSKeychain keychainGroup] forKey:(id)kSecAttrAccessGroup];
+#endif        
+    }
+#endif
 	
     return dictionary;
 }

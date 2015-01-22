@@ -40,6 +40,7 @@
 #import "NSString+URLEncoding.h"
 #import "ENShareURLHelper.h"
 #import "ENCommonUtils.h"
+#import "ENSSKeychain.h"
 
 // Strings visible publicly.
 NSString * const ENSessionHostSandbox = @"sandbox.evernote.com";
@@ -142,6 +143,11 @@ static NSString * SessionHostOverride;
 static NSString * ConsumerKey, * ConsumerSecret;
 static NSString * DeveloperToken, * NoteStoreUrl;
 static BOOL disableRefreshingNotebooksCacheOnLaunch;
+
++ (void) setKeychainGroup:(NSString*)keychainGroup
+{
+    [ENCredentialStore setKeychainGroup:keychainGroup];
+}
 
 + (void)setSharedSessionConsumerKey:(NSString *)key
                      consumerSecret:(NSString *)secret
