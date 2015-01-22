@@ -237,7 +237,7 @@ CFTypeRef ENSSKeychainAccessibilityType = NULL;
 + (void) setKeychainGroup:(NSString*)keychainGroup
 {
     _keychainGroup = keychainGroup;
-    _accessGroup = [[[self bundleSeedID] stringByAppendingString:@"."] stringByAppendingString:[self bundleSeedID]];
+    _accessGroup = [[[self bundleSeedID] stringByAppendingString:@"."] stringByAppendingString:_keychainGroup];
 }
 
 + (NSString*) keychainGroup
