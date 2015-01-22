@@ -226,3 +226,26 @@
 +(instancetype) preferenceStoreWithSecurityApplicationGroupIdentifier:(NSString*)groupId;
 
 @end
+
+/**
+ * To share credentials and preferences between app and extension, set the security application group identifier and keychain group.
+ * Configure the appropriate capabilities in XCode for both app and extensions.
+ */
+@interface ENSession (Shared)
+
+/**
+ *  Set the security application group identifier, if the app should share authenticate with an application group.
+ *
+ *  @param the security application group identifier.
+ *  @see https://developer.apple.com/library/prerelease/ios/documentation/General/Conceptual/ExtensibilityPG/ExtensionScenarios.html#//apple_ref/doc/uid/TP40014214-CH21-SW6
+ */
++ (void) setSecurityApplicationGroupIdentifier:(NSString*)securityApplicationGroupIdentifier;
+
+/**
+ *  The keychain groups used for keychain sharing. If not set, keychain sharing is disabled.
+ *
+ *  This should be the shared keychain group of your app in XCode "Capabilities" > "Keychain Sharing".
+ */
++ (void) setKeychainGroup:(NSString*)keychainGroup;
+
+@end
