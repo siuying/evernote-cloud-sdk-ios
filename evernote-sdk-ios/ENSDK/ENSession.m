@@ -352,7 +352,8 @@ static BOOL disableRefreshingNotebooksCacheOnLaunch;
     // If we're overriding the standard host, then we're in some sort of development environment
     // (sandbox), and the cross-app auth won't work. In this case, force the authenticator to use
     // web auth only.
-    self.authenticator.useWebAuthenticationOnly = (SessionHostOverride != nil);
+    // If we are iOS 11 and on iPad, use web login to workaround the bug on Evernote app.
+    self.authenticator.useWebAuthenticationOnly = (SessionHostOverride != nil) || (IsIOS11() && UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
     
     [self.authenticator authenticateWithViewController:viewController];
 }
