@@ -18,6 +18,14 @@ BOOL IsIOS8() {
     }
 }
 
+BOOL IsIOS11() {
+    if([[UIDevice currentDevice].systemVersion floatValue] >= 11.0) {
+        return YES;
+    }else {
+        return NO;
+    }
+}
+
 BOOL IsEvernoteInstalled() {
     return [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"en://"]];
 }

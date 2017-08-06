@@ -11,6 +11,7 @@
 @interface ENCommonUtils : NSObject
 
 BOOL IsIOS8();
+BOOL IsIOS11();
 BOOL IsEvernoteInstalled();
 
 @end

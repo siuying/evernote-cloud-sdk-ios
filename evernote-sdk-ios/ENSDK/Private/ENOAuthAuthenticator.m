@@ -74,6 +74,7 @@ NSString * ENOAuthAuthenticatorAuthInfoAppNotebookIsLinked = @"ENOAuthAuthentica
 @property (nonatomic, assign) BOOL isMultitaskLoginDisabled;
 @property (nonatomic, assign) BOOL isSwitchingInProgress;
 @property (nonatomic, assign) BOOL isActiveBecauseOfCallback;
+@property (nonatomic, assign) BOOL isActiveBecauseOfExtraNotificationOniOS11;
 
 @property (nonatomic, assign) BOOL userSelectedLinkedAppNotebook;
 
@@ -87,6 +88,10 @@ NSString * ENOAuthAuthenticatorAuthInfoAppNotebookIsLinked = @"ENOAuthAuthentica
     self = [super init];
     if (self) {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleDidBecomeActive) name:UIApplicationDidBecomeActiveNotification object:nil];
+
+        if (IsIOS11()) {
+            self.isActiveBecauseOfExtraNotificationOniOS11 = true;
+        }
     }
     return self;
 }
@@ -312,6 +317,13 @@ NSString * ENOAuthAuthenticatorAuthInfoAppNotebookIsLinked = @"ENOAuthAuthentica
 }
 
 - (void)handleDidBecomeActive{
+    // ignore first notification on iOS 11
+    // workaround: http://www.openradar.me/33153062
+    if (self.isActiveBecauseOfExtraNotificationOniOS11) {
+        self.isActiveBecauseOfExtraNotificationOniOS11 = false;
+        return;
+    }
+
     //Unexpected to calls to app delegate's applicationDidBecomeActive are
     // handled by this method.
     const ENOAuthAuthenticatorState state = self.state;
