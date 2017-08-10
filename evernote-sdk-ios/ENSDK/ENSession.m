@@ -349,10 +349,8 @@ static BOOL disableRefreshingNotebooksCacheOnLaunch;
     self.authenticator.supportsLinkedAppNotebook = self.supportsLinkedAppNotebook;
     self.authenticator.preferRegistration = preferRegistration;
     
-    // If we're overriding the standard host, then we're in some sort of development environment
-    // (sandbox), and the cross-app auth won't work. In this case, force the authenticator to use
-    // web auth only.
-    self.authenticator.useWebAuthenticationOnly = (SessionHostOverride != nil);
+    // workaround evernote's login issue affect us
+    self.authenticator.useWebAuthenticationOnly = true;
     
     [self.authenticator authenticateWithViewController:viewController];
 }
